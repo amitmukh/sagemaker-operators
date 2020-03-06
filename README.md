@@ -1,12 +1,10 @@
 This repository contains code and config files supporting SageMaker Operator demo and credit goes to shashankprasanna
 
 ### Amazon SageMaker Operators for Kubernetes and how to use it:
-Amazon SageMaker Operators for Kubernetes is implemented as a custom resource in Kubernetes and enables Kubernetes to invoke Amazon SageMaker functionality. Below, I’ll provide step-by-step instructions for implementing each of these use cases:
+Amazon SageMaker Operators for Kubernetes is implemented as a custom resource in Kubernetes and enables Kubernetes to invoke Amazon SageMaker functionality. Below, I’ll provide step-by-step instructions train a model and host the model using Sagemaker Operators.
 
-Use case 1: Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
-Use case 2: Distributed training with a custom container
-Use case 3: Hyperparameter optimization at-scale with TensorFlow
-Use case 4: Hosting an inference endpoint with BYO model  
+- Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
+- Hosting an inference endpoint   
 
 To follow along, I assume you have an AWS account, and AWS CLI tool, Kubectl, AWS IAM Authenticator installed on your host machine. If not then use the below link to install the same:
 
@@ -60,16 +58,16 @@ git clone https://github.com/amitmukh/sagemaker-operators.git
 
 ## Download training dataset and upload to Amazon S3
 
-cd kubernetes-sagemaker-demos/0-upload-dataset-s3
+cd sagemaker-operators/0-upload-dataset-s3
 
 Note: TensorFlow must be installed on the host machine to download the dataset and convert into the TFRecord format. So instead of using local laptop you can use Sagemaker to do this part.
 
-## Use case 1: Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
+## Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
 
 If you’re new to Amazon SageMaker, one of its nice features when using popular frameworks such as TensorFlow, PyTorch, MXNet, XGBoost and others is that you don’t have to worry about building custom containers with your code in it and pushing it to a container registry. Amazon SageMaker can automatically download any training scripts and dependencies into a framework container and run it at scale for you. So you just have to version and manage your training scripts and don’t have to deal with containers at all. With Amazon SageMaker Operators for Kubernetes, you can still get the same experience.
 Navigate to the directory with the 1st example:
 
-cd kubernetes-sagemaker-demos/1-tf-dist-training-training-script/
+cd sagemaker-operators/1-tf-dist-training-training-script/
 ls -1
 
 Output:
@@ -129,3 +127,43 @@ To view the training logs, click on the training job in the console and click on
 Alternatively, if you installed [smlogs](https://sagemaker.readthedocs.io/en/stable/amazon_sagemaker_operators_for_kubernetes.html#install-the-amazon-sagemaker-logs-kubectl-plugin) plugin, then you can run the following to view logs using kubectl:
 
 kubectl smlogs trainingjob k8s-sm-dist-training-script
+
+## Hosting an inference endpoint
+
+In Previous step you already trained a model in Amazon Sagemaker now you will be hosting the model in Sagemaker environment using Sagemaker Operators.
+
+Navigate to the directory name 2-tf-inference-host-endpoint.
+
+cd sagemaker-operators/3-tf-hyperopt-training-script
+ls -1
+
+
+Output:
+
+k8s-sm-inference-host-endpoint.yaml
+
+
+Open k8s-sm-inference-host-endpoint.yaml config file in your favorite text editor to take a closer look.
+
+Specify the type of instance for hosting under instanceType, and provide a weight for A/B testing if you’re hosting multiple models. Under modelDataUrl specify the location of the trained model on Amazon S3.
+
+To deploy a model, run:
+
+kubectl apply -f k8s-sm-inference-host-endpoint.yaml
+
+
+Output:
+
+hostingdeployment.sagemaker.aws.amazon.com/k8s-sm-inference-host-endpoint created
+
+To view details about the hosting deployment, run:
+
+kubectl get hostingdeployments
+
+Output:
+
+NAME STATUS SAGEMAKER-ENDPOINT-NAME
+k8s-sm-inference-host-endpoint Creating k8s-sm-inference-host-endpoint-cdbb6db95d3111ea97a20e30c8d9dadc
+
+Navigate to AWS Console > Amazon SageMaker > Endpoints
+You should be able to see an Amazon SageMaker endpoint inservice and ready to accept requests.
