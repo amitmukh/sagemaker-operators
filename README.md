@@ -1,4 +1,4 @@
-This repository contains code and config files supporting SageMaker Operator Workshop
+This repository contains code and config files supporting SageMaker Operator demo. and credit goes to shashankprasanna
 
 ### Amazon SageMaker Operators for Kubernetes and how to use it:
 Amazon SageMaker Operators for Kubernetes is implemented as a custom resource in Kubernetes and enables Kubernetes to invoke Amazon SageMaker functionality. Below, I’ll provide step-by-step instructions for implementing each of these use cases:
@@ -6,7 +6,7 @@ Amazon SageMaker Operators for Kubernetes is implemented as a custom resource in
 Use case 1: Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
 Use case 2: Distributed training with a custom container
 Use case 3: Hyperparameter optimization at-scale with TensorFlow
-Use case 4: Hosting an inference endpoint with BYO model
+Use case 4: Hosting an inference endpoint with BYO model  
 
 To follow along, I assume you have an AWS account, and AWS CLI tool, Kubectl, AWS IAM Authenticator installed on your host machine. If not then use the below link to install the same:
 
@@ -19,7 +19,7 @@ To follow along, I assume you have an AWS account, and AWS CLI tool, Kubectl, AW
 
 Let’s start by spinning up a Kubernetes cluster. With the eksctl CLI tool, all it takes is a simple command and 15 mins of your time for a very simple cluster with a couple of nodes.
 
-##Create a Kubernetes cluster
+## Create a Kubernetes cluster
 
 eksctl create cluster \
     --name sm-operator-demo \
@@ -33,7 +33,7 @@ eksctl create cluster \
     --timeout=40m \
     --auto-kubeconfig
 
-##Install Amazon SageMaker Operators for Kubernetes
+## Install Amazon SageMaker Operators for Kubernetes
 
 Once the cluster is up and running, follow the instructions in the user guide to install Amazon SageMaker Operators for Kubernetes. You can also refer to this helpful blog post to guide your installation process: [Introducing Amazon SageMaker Operators for Kubernetes](https://https://aws.amazon.com/blogs/machine-learning/introducing-amazon-sagemaker-operators-for-kubernetes/)
 
@@ -52,19 +52,19 @@ trainingjobs.sagemaker.aws.amazon.com                           2020-02-29T21:21
 
 These are all the tasks you can perform on Amazon SageMaker using the Amazon SageMaker Operators for Kubernetes, and we’ll take a closer look at (1) training jobs (2) hyperparameter tuning jobs (3) hosting deployments.
 
-##Download examples from GitHub
+## Download examples from GitHub
 
 Download training scripts, config files and Jupyter notebooks to your host machine.
 
 git clone https://github.com/amitmukh/kubernetes-sagemaker-demos.git
 
-##Download training dataset and upload to Amazon S3
+## Download training dataset and upload to Amazon S3
 
 cd kubernetes-sagemaker-demos/0-upload-dataset-s3
 
 Note: TensorFlow must be installed on the host machine to download the dataset and convert into the TFRecord format. So instead of using local laptop you can use Sagemaker to do this part.
 
-##Use case 1: Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
+## Use case 1: Distributed training with TensorFlow, PyTorch, MXNet and other frameworks
 
 If you’re new to Amazon SageMaker, one of its nice features when using popular frameworks such as TensorFlow, PyTorch, MXNet, XGBoost and others is that you don’t have to worry about building custom containers with your code in it and pushing it to a container registry. Amazon SageMaker can automatically download any training scripts and dependencies into a framework container and run it at scale for you. So you just have to version and manage your training scripts and don’t have to deal with containers at all. With Amazon SageMaker Operators for Kubernetes, you can still get the same experience.
 Navigate to the directory with the 1st example:
