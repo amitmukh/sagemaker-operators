@@ -1,4 +1,4 @@
-This repository contains code and config files supporting SageMaker Operator demo. and credit goes to shashankprasanna
+This repository contains code and config files supporting SageMaker Operator demo and credit goes to shashankprasanna
 
 ### Amazon SageMaker Operators for Kubernetes and how to use it:
 Amazon SageMaker Operators for Kubernetes is implemented as a custom resource in Kubernetes and enables Kubernetes to invoke Amazon SageMaker functionality. Below, I’ll provide step-by-step instructions for implementing each of these use cases:
@@ -56,7 +56,7 @@ These are all the tasks you can perform on Amazon SageMaker using the Amazon Sag
 
 Download training scripts, config files and Jupyter notebooks to your host machine.
 
-git clone https://github.com/amitmukh/kubernetes-sagemaker-demos.git
+git clone https://github.com/amitmukh/sagemaker-operators.git
 
 ## Download training dataset and upload to Amazon S3
 
