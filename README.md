@@ -68,6 +68,7 @@ If you’re new to Amazon SageMaker, one of its nice features when using popular
 Navigate to the directory with the 1st example:
 
 cd sagemaker-operators/1-tf-dist-training-training-script/
+
 ls -1
 
 Output:
@@ -135,6 +136,7 @@ In Previous step you already trained a model in Amazon Sagemaker now you will be
 Navigate to the directory name 2-tf-inference-host-endpoint.
 
 cd sagemaker-operators/3-tf-hyperopt-training-script
+
 ls -1
 
 
